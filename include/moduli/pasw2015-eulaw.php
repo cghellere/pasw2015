@@ -127,4 +127,21 @@ function my_register_mce_button( $buttons ) {
 }
 /* ======= END Buttom Editor ======== */
 
+/* =========== AUTOBLOCK ============ */
+function pasw_eulaw_autoblock($content) {
+	$cookie_name = 'pasw_law_cookie';
+	if(!isset($_COOKIE[$cookie_name])) {
+		$returner = '<div class="pasw2015cookies_block" style="width:auto;height:auto;">';
+		$returner .= html_entity_decode(get_option('pasw_eucookie_box_msg'));
+		$returner .='</div><div class="clear"></div>';
+		$content = preg_replace('#<iframe.*?\/iframe>|<embed.*?>|<script.*?\/script>#is', $returner , $content);
+	}
+  // otherwise returns the database content
+  return $content;
+}
+
+add_filter( 'the_content', 'pasw_eulaw_autoblock' );
+
+/* ========= END AUTOBLOCK ========== */
+
 }
